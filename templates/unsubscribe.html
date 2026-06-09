@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unsubscribe</title>
+</head>
+<body>
+    <h1>Unsubscribe</h1>
+    <p>Enter your email below to be removed from the list.</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <p><strong>{{ message }}</strong></p>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="POST" action="/unsubscribe">
+        <label for="email">Your email</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <button type="submit">Unsubscribe</button>
+    </form>
+
+    <p>Changed your mind? <a href="/subscribe">Re-subscribe here.</a></p>
+</body>
+</html>

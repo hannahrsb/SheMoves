@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Dashboard</title>
+   <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    <h1>Upcoming Events</h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div style="padding: 12px; margin-bottom: 20px; background-color: #d4edda; color: #155724; border-radius: 4px; border: 1px solid #c3e6cb;">
+              {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Event Title</th>
+                <th>Date</th>
+                <th>Remaining Spots</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td><strong>{{ event.title }}</strong></td>
+                <td>{{ event.date }}</td>
+                <td>{{ event.spots_left }} / 5</td>
+                <td>
+                    {% if event.spots_left > 0 %}
+                        <a href="{{ url_for('register', event_id=event.id) }}"><button>Register</button></a>
+                    {% else %}
+                        <button disabled style="background-color: #6c757d; cursor: not-allowed;">Sold Out</button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
